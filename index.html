@@ -31,10 +31,6 @@
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -52,13 +48,13 @@
       from { transform: scaleY(0); }
       to { transform: scaleY(1); }
     }
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     @keyframes shimmer {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .animate-on-scroll {
@@ -101,7 +97,6 @@
       animation: gradientShift 4s ease infinite;
     }
 
-    /* Spreadsheet grid background */
     .grid-bg {
       background-image:
         linear-gradient(rgba(214,211,209,0.3) 1px, transparent 1px),
@@ -109,7 +104,6 @@
       background-size: 60px 60px;
     }
 
-    /* Ledger row styling */
     .ledger-row {
       transition: all 0.3s ease;
       border-left: 3px solid transparent;
@@ -119,7 +113,6 @@
       border-left-color: #1c1917;
     }
 
-    /* Timeline */
     .timeline-line {
       position: absolute;
       left: 20px;
@@ -230,27 +223,6 @@
     }
     .social-btn.email:hover .social-icon { color: #fff; }
 
-    /* Invoice table */
-    .invoice-table th {
-      text-align: left;
-      padding: 10px 16px;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #a8a29e;
-      border-bottom: 1px solid #e7e5e4;
-    }
-    .invoice-table td {
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #57534e;
-      border-bottom: 1px solid rgba(231,229,228,0.5);
-    }
-    .invoice-table tr:last-child td { border-bottom: none; }
-    .invoice-table tr:hover td { color: #1c1917; background: rgba(255,255,255,0.5); }
-
-    /* Bar chart animation */
     .bar-animate {
       transform-origin: bottom;
       animation: growBar 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -261,11 +233,26 @@
     .bar-animate-d4 { animation-delay: 0.8s; transform: scaleY(0); }
     .bar-animate-d5 { animation-delay: 1.0s; transform: scaleY(0); }
 
-    /* Dot pattern */
     .dot-pattern {
       background-image: radial-gradient(circle, rgba(168,162,158,0.15) 1px, transparent 1px);
       background-size: 24px 24px;
     }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    .input-error {
+      border-color: #dc2626 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+    }
+    .error-text {
+      color: #dc2626;
+      font-size: 11px;
+      margin-top: 4px;
+      display: none;
+    }
+    .error-text.show { display: block; }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -311,14 +298,12 @@
 
   <!-- ========== HERO ========== -->
   <section id="hero" class="relative min-h-screen flex items-center overflow-hidden grid-bg">
-    <!-- Decorative chart SVG -->
     <svg class="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-[0.04] hidden lg:block" viewBox="0 0 400 400">
       <polyline points="0,350 60,300 120,280 180,200 240,220 300,120 360,80 400,50" fill="none" stroke="#1c1917" stroke-width="3" stroke-dasharray="1000" style="animation: drawLine 3s ease forwards"/>
       <line x1="0" y1="350" x2="400" y2="350" stroke="#1c1917" stroke-width="1"/>
       <line x1="0" y1="0" x2="0" y2="350" stroke="#1c1917" stroke-width="1"/>
     </svg>
 
-    <!-- Decorative bar chart -->
     <svg class="absolute left-8 bottom-20 w-[200px] h-[150px] opacity-[0.04] hidden lg:block" viewBox="0 0 200 150">
       <rect x="10" y="80" width="25" height="70" rx="4" fill="#1c1917" class="bar-animate bar-animate-d1"/>
       <rect x="45" y="50" width="25" height="100" rx="4" fill="#1c1917" class="bar-animate bar-animate-d2"/>
@@ -330,7 +315,6 @@
 
     <div class="max-w-7xl mx-auto px-6 w-full pt-32 pb-20 md:pt-40 md:pb-32 relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <!-- Left -->
         <div class="order-2 lg:order-1">
           <div class="hero-fade inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8">
             <span class="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
@@ -349,7 +333,6 @@
             <span class="text-stone-700 font-medium">Human Resource Management</span>.
           </p>
 
-          <!-- Social Links -->
           <div class="hero-fade-d3 flex items-center gap-3 mb-10">
             <a href="https://www.linkedin.com/in/linda-lestari-tampubolon-208757345" target="_blank" rel="noopener noreferrer" class="social-btn linkedin w-10 h-10 rounded-xl border border-stone-200 bg-white flex items-center justify-center">
               <span class="iconify social-icon text-base text-stone-500 transition-colors" data-icon="mdi:linkedin"></span>
@@ -374,7 +357,6 @@
             </a>
           </div>
 
-          <!-- Balance Sheet Style Stats -->
           <div class="hero-fade-d5 mt-12 rounded-2xl border border-stone-200/60 overflow-hidden">
             <div class="bg-stone-900 text-white px-5 py-3 flex items-center gap-2">
               <span class="iconify text-sm text-stone-400" data-icon="lucide:table-2"></span>
@@ -404,7 +386,6 @@
           </div>
         </div>
 
-        <!-- Right -->
         <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
           <div class="relative">
             <div class="absolute -inset-4 rounded-[2.5rem] -z-10" style="background: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(214,211,209,0.4) 59px, rgba(214,211,209,0.4) 60px), repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(214,211,209,0.4) 59px, rgba(214,211,209,0.4) 60px);"></div>
@@ -437,7 +418,6 @@
               </div>
             </div>
 
-            <!-- Receipt-style decoration -->
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-xl shadow-md flex items-center gap-2">
               <span class="iconify text-xs text-stone-400" data-icon="lucide:receipt"></span>
               <span class="text-[10px] font-medium text-stone-500">ID: LL-2025-ACC</span>
@@ -448,7 +428,7 @@
     </div>
   </section>
 
-  <!-- ========== ABOUT (Balance Sheet Style) ========== -->
+  <!-- ========== ABOUT ========== -->
   <section id="about" class="py-24 px-6 relative">
     <div class="max-w-6xl mx-auto">
       <div class="animate-on-scroll text-center mb-16">
@@ -457,7 +437,6 @@
         <p class="text-sm text-stone-500 mt-3 max-w-md mx-auto">Seperti neraca keuangan, berikut adalah gambaran aset dan kompetensi yang saya miliki.</p>
       </div>
 
-      <!-- Balance Sheet Layout -->
       <div class="animate-on-scroll max-w-4xl mx-auto rounded-2xl border border-stone-200/60 overflow-hidden shadow-sm">
         <div class="bg-stone-900 text-white px-6 py-4 flex items-center justify-between">
           <div class="flex items-center gap-3">
@@ -471,14 +450,12 @@
         </div>
 
         <div class="bg-white/80">
-          <!-- Header -->
           <div class="grid grid-cols-3 px-6 py-3 border-b border-stone-200 bg-stone-50/50">
             <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400">No. Akun</span>
             <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Keterangan</span>
             <span class="text-[10px] font-bold uppercase tracking-widest text-stone-400 text-right">Keterangan</span>
           </div>
 
-          <!-- Assets -->
           <div class="px-6 py-2.5 bg-stone-50/30 border-b border-stone-100">
             <span class="text-xs font-bold text-stone-700 uppercase tracking-wider">Aset — Kompetensi</span>
           </div>
@@ -507,7 +484,6 @@
             <span class="text-sm text-stone-500 text-right">Excel Competition, OnMipa</span>
           </div>
 
-          <!-- Liabilities/Equity -->
           <div class="px-6 py-2.5 bg-stone-50/30 border-b border-stone-100">
             <span class="text-xs font-bold text-stone-700 uppercase tracking-wider">Kewajiban — Fokus Pengembangan</span>
           </div>
@@ -532,7 +508,7 @@
     </div>
   </section>
 
-  <!-- ========== EXPERIENCE (Journal Entry Style) ========== -->
+  <!-- ========== EXPERIENCE ========== -->
   <section id="experience" class="py-24 px-6 relative dot-pattern">
     <div class="max-w-6xl mx-auto">
       <div class="animate-on-scroll text-center mb-16">
@@ -544,7 +520,6 @@
       <div class="relative pl-12 md:pl-16">
         <div class="timeline-line"></div>
 
-        <!-- Entry 1 -->
         <div class="animate-on-scroll delay-1 timeline-item relative pb-12">
           <div class="timeline-dot" style="top: 6px;"></div>
           <div class="glass-card rounded-2xl overflow-hidden card-hover">
@@ -560,9 +535,7 @@
             <div class="p-6">
               <h3 class="text-lg font-medium text-stone-900 mb-1">Accounting Officer</h3>
               <p class="text-sm text-stone-500 mb-3">PT. ANUGERAH BERKAT TECHNOPLAST</p>
-              <p class="text-sm text-stone-500 leading-relaxed mb-4">
-                Bertanggung jawab dalam pengelolaan pembukuan, pencatatan transaksi keuangan, dan penyusunan laporan keuangan perusahaan manufaktur plastik.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed mb-4">Bertanggung jawab dalam pengelolaan pembukuan, pencatatan transaksi keuangan, dan penyusunan laporan keuangan perusahaan manufaktur plastik.</p>
               <div class="flex flex-wrap gap-2">
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Pembukuan</span>
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Laporan Keuangan</span>
@@ -572,7 +545,6 @@
           </div>
         </div>
 
-        <!-- Entry 2 -->
         <div class="animate-on-scroll delay-2 timeline-item relative pb-12">
           <div class="timeline-dot" style="top: 6px;"></div>
           <div class="glass-card rounded-2xl overflow-hidden card-hover">
@@ -588,9 +560,7 @@
             <div class="p-6">
               <h3 class="text-lg font-medium text-stone-900 mb-1">Marketing Department Specialist</h3>
               <p class="text-sm text-stone-500 mb-3">Promex Batam</p>
-              <p class="text-sm text-stone-500 leading-relaxed mb-4">
-                Menangani strategi pemasaran, analisis pasar, dan pengembangan departemen marketing untuk meningkatkan brand awareness dan penjualan.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed mb-4">Menangani strategi pemasaran, analisis pasar, dan pengembangan departemen marketing untuk meningkatkan brand awareness dan penjualan.</p>
               <div class="flex flex-wrap gap-2">
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Marketing Strategy</span>
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Market Analysis</span>
@@ -600,7 +570,6 @@
           </div>
         </div>
 
-        <!-- Entry 3 -->
         <div class="animate-on-scroll delay-3 timeline-item relative pb-12">
           <div class="timeline-dot" style="top: 6px;"></div>
           <div class="glass-card rounded-2xl overflow-hidden card-hover">
@@ -613,9 +582,7 @@
             <div class="p-6">
               <h3 class="text-lg font-medium text-stone-900 mb-1">Marketing Executive</h3>
               <p class="text-sm text-stone-500 mb-3">Graha Yamaha</p>
-              <p class="text-sm text-stone-500 leading-relaxed mb-4">
-                Melaksanakan kegiatan pemasaran dan promosi produk Yamaha, membantu mencapai target penjualan melalui strategi pemasaran yang efektif.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed mb-4">Melaksanakan kegiatan pemasaran dan promosi produk Yamaha, membantu mencapai target penjualan melalui strategi pemasaran yang efektif.</p>
               <div class="flex flex-wrap gap-2">
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Promosi</span>
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Sales Target</span>
@@ -625,7 +592,6 @@
           </div>
         </div>
 
-        <!-- Entry 4 -->
         <div class="animate-on-scroll delay-4 timeline-item relative pb-12">
           <div class="timeline-dot" style="top: 6px;"></div>
           <div class="glass-card rounded-2xl overflow-hidden card-hover">
@@ -638,9 +604,7 @@
             <div class="p-6">
               <h3 class="text-lg font-medium text-stone-900 mb-1">Admin Manager</h3>
               <p class="text-sm text-stone-500 mb-3">PT. ANHONG MEDIA INTERNASIONAL <span class="text-stone-300">(Agensi TikTok)</span></p>
-              <p class="text-sm text-stone-500 leading-relaxed mb-4">
-                Mengelola administrasi perusahaan agensi TikTok, mengoordinasikan tim, serta mengatur jadwal dan kebutuhan operasional sehari-hari.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed mb-4">Mengelola administrasi perusahaan agensi TikTok, mengoordinasikan tim, serta mengatur jadwal dan kebutuhan operasional sehari-hari.</p>
               <div class="flex flex-wrap gap-2">
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Administrasi</span>
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Manajemen Tim</span>
@@ -650,7 +614,6 @@
           </div>
         </div>
 
-        <!-- Entry 5 -->
         <div class="animate-on-scroll delay-5 timeline-item relative">
           <div class="timeline-dot" style="top: 6px;"></div>
           <div class="glass-card rounded-2xl overflow-hidden card-hover">
@@ -663,9 +626,7 @@
             <div class="p-6">
               <h3 class="text-lg font-medium text-stone-900 mb-1">Bagian Pembukuan & Pengarsipan</h3>
               <p class="text-sm text-stone-500 mb-3">PT. PERKEBUNAN NUSANTARA PERSERO <span class="text-stone-300">(BUMN)</span></p>
-              <p class="text-sm text-stone-500 leading-relaxed mb-4">
-                Melaksanakan tugas pembukuan dan pengarsipan dokumen perusahaan di lingkungan BUMN perkebunan, memahami prosedur kerja korporasi.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed mb-4">Melaksanakan tugas pembukuan dan pengarsipan dokumen perusahaan di lingkungan BUMN perkebunan, memahami prosedur kerja korporasi.</p>
               <div class="flex flex-wrap gap-2">
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Pembukuan</span>
                 <span class="skill-tag text-[11px] font-medium text-stone-500 bg-stone-100 px-3 py-1 rounded-lg cursor-default">Pengarsipan</span>
@@ -678,7 +639,7 @@
     </div>
   </section>
 
-  <!-- ========== EDUCATION (Financial Statement Style) ========== -->
+  <!-- ========== EDUCATION ========== -->
   <section id="education" class="py-24 px-6 relative grid-bg">
     <div class="max-w-6xl mx-auto">
       <div class="animate-on-scroll text-center mb-16">
@@ -701,9 +662,7 @@
           <div class="p-6">
             <h3 class="text-lg font-medium text-stone-900 mb-1">Universitas Internasional Batam</h3>
             <p class="text-sm text-stone-400 mb-4 font-mono">UIB · 2024 — Sekarang</p>
-            <p class="text-sm text-stone-500 leading-relaxed">
-              Melanjutkan pendidikan tinggi dengan fokus pada pengembangan kemampuan di bidang bisnis, akuntansi, dan manajemen sumber daya manusia.
-            </p>
+            <p class="text-sm text-stone-500 leading-relaxed">Melanjutkan pendidikan tinggi dengan fokus pada pengembangan kemampuan di bidang bisnis, akuntansi, dan manajemen sumber daya manusia.</p>
           </div>
         </div>
 
@@ -718,9 +677,7 @@
           <div class="p-6">
             <h3 class="text-lg font-medium text-stone-900 mb-1">SMK Pembangunan Bagan Batu</h3>
             <p class="text-sm text-stone-400 mb-4 font-mono">Akuntansi · 2021 — 2024</p>
-            <p class="text-sm text-stone-500 leading-relaxed">
-              Mendalami ilmu akuntansi mulai dari dasar pembukuan, jurnal, laporan keuangan, hingga penggunaan software akuntansi.
-            </p>
+            <p class="text-sm text-stone-500 leading-relaxed">Mendalami ilmu akuntansi mulai dari dasar pembukuan, jurnal, laporan keuangan, hingga penggunaan software akuntansi.</p>
           </div>
         </div>
       </div>
@@ -754,9 +711,7 @@
             <div class="px-6 pb-6">
               <h3 class="text-lg font-medium text-white mb-1">Microsoft Excel Competition</h3>
               <p class="text-sm text-stone-400 mb-3">Season 1 — Peserta Kompetisi</p>
-              <p class="text-sm text-stone-500 leading-relaxed">
-                Berpartisipasi dalam kompetisi Microsoft Excel yang menguji kemampuan pengolahan data, formula advance, dan analisis spreadsheet.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed">Berpartisipasi dalam kompetisi Microsoft Excel yang menguji kemampuan pengolahan data, formula advance, dan analisis spreadsheet.</p>
               <div class="mt-4 pt-4 border-t border-white/10 flex items-center gap-2">
                 <span class="iconify text-sm text-stone-500" data-icon="lucide:table-2"></span>
                 <span class="text-xs text-stone-500">Kompetisi Nasional · Spreadsheet</span>
@@ -783,9 +738,7 @@
             <div class="px-6 pb-6">
               <h3 class="text-lg font-medium text-white mb-1">Olimpiade OnMipa</h3>
               <p class="text-sm text-stone-400 mb-3">Peserta — Bidang Biologi · 05 Maret 2025</p>
-              <p class="text-sm text-stone-500 leading-relaxed">
-                Terpilih sebagai peserta Olimpiade Nasional Matematika dan Ilmu Pengetahuan Alam bidang Biologi.
-              </p>
+              <p class="text-sm text-stone-500 leading-relaxed">Terpilih sebagai peserta Olimpiade Nasional Matematika dan Ilmu Pengetahuan Alam bidang Biologi.</p>
               <div class="mt-4 pt-4 border-t border-white/10 flex items-center gap-2">
                 <span class="iconify text-sm text-stone-500" data-icon="lucide:microscope"></span>
                 <span class="text-xs text-stone-500">Olimpiade Nasional · Biologi</span>
@@ -797,7 +750,7 @@
     </div>
   </section>
 
-  <!-- ========== SKILLS (Chart of Accounts Style) ========== -->
+  <!-- ========== SKILLS ========== -->
   <section id="skills" class="py-24 px-6 relative dot-pattern">
     <div class="max-w-6xl mx-auto">
       <div class="animate-on-scroll text-center mb-16">
@@ -895,17 +848,17 @@
     </div>
   </section>
 
-  <!-- ========== CONTACT (Invoice Style) ========== -->
+  <!-- ========== CONTACT ========== -->
   <section id="contact" class="py-24 px-6 relative grid-bg">
     <div class="max-w-6xl mx-auto">
       <div class="animate-on-scroll text-center mb-16">
         <span class="inline-block text-[10px] font-bold uppercase tracking-[0.15em] text-stone-400 mb-4">Invoice Pertanyaan</span>
         <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-stone-900">Hubungi Saya</h2>
-        <p class="text-sm text-stone-500 mt-3 max-w-md mx-auto">Silakan kirim "invoice pertanyaan" Anda — saya akan merespons secepat mungkin.</p>
+        <p class="text-sm text-stone-500 mt-3 max-w-md mx-auto">Silakan kirim "invoice pertanyaan" Anda — pesan akan langsung dikirim ke email saya.</p>
       </div>
 
       <div class="grid md:grid-cols-5 gap-8 max-w-5xl mx-auto">
-        <!-- Contact Info (Invoice header style) -->
+        <!-- Contact Info -->
         <div class="md:col-span-2 animate-on-scroll delay-1">
           <div class="glass-card rounded-2xl overflow-hidden">
             <div class="bg-stone-900 text-white px-5 py-4">
@@ -960,35 +913,47 @@
           </div>
         </div>
 
-        <!-- Form (Invoice detail style) -->
+        <!-- Form -->
         <div class="md:col-span-3 animate-on-scroll delay-2">
           <div class="glass-card rounded-2xl overflow-hidden">
             <div class="bg-stone-50/80 px-5 py-3 border-b border-stone-100 flex items-center gap-2">
               <span class="iconify text-sm text-stone-400" data-icon="lucide:file-text"></span>
               <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">Detail Pesan</span>
             </div>
-            <form id="contactForm" class="p-6 space-y-5">
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Nama Pengirim</label>
-                <input type="text" required placeholder="Masukkan nama Anda" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
+            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+              <!-- Web3Forms API -->
+              <input type="hidden" name="access_key" value="a0272121-f7f8-4764-a8d0-063662be34e7">
+              <input type="hidden" name="subject" value="Pesan Baru dari Portfolio Website — Linda Lestari">
+              <input type="hidden" name="from_name" value="Portfolio Website">
+              <input type="checkbox" name="botcheck" class="hidden">
+
+              <div class="p-6 space-y-5">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Nama Pengirim</label>
+                  <input type="text" name="name" required placeholder="Masukkan nama Anda" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
+                  <div class="error-text" id="nameError">Nama wajib diisi</div>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Email Pengirim</label>
+                  <input type="email" name="email" required placeholder="Masukkan email Anda" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
+                  <div class="error-text" id="emailError">Format email tidak valid</div>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Perihal</label>
+                  <input type="text" name="perihal" required placeholder="Tentang apa?" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
+                  <div class="error-text" id="perihalError">Perihal wajib diisi</div>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Isi Pesan</label>
+                  <textarea rows="5" name="message" required placeholder="Tulis pesan Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all resize-none"></textarea>
+                  <div class="error-text" id="messageError">Pesan wajib diisi (minimal 10 karakter)</div>
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-stone-900 text-white text-sm font-medium py-3.5 rounded-xl hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-300 transition-all duration-300 flex items-center justify-center gap-2 group">
+                  <span class="iconify text-sm" data-icon="lucide:send"></span>
+                  Kirim Pesan
+                  <span class="iconify text-base group-hover:translate-x-1 transition-transform" data-icon="lucide:arrow-right"></span>
+                </button>
               </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Email Pengirim</label>
-                <input type="email" required placeholder="Masukkan email Anda" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Perihal</label>
-                <input type="text" required placeholder="Tentang apa?" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all">
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Isi Pesan</label>
-                <textarea rows="5" required placeholder="Tulis pesan Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-white/60 border border-stone-200 text-sm text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-200 focus:border-stone-400 transition-all resize-none"></textarea>
-              </div>
-              <button type="submit" class="w-full bg-stone-900 text-white text-sm font-medium py-3.5 rounded-xl hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-300 transition-all duration-300 flex items-center justify-center gap-2 group">
-                <span class="iconify text-sm" data-icon="lucide:send"></span>
-                Kirim Pesan
-                <span class="iconify text-base group-hover:translate-x-1 transition-transform" data-icon="lucide:arrow-right"></span>
-              </button>
             </form>
           </div>
         </div>
@@ -1009,13 +974,13 @@
 
         <div class="flex items-center gap-3">
           <a href="https://www.linkedin.com/in/linda-lestari-tampubolon-208757345" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/15 transition-colors">
-            <span class="iconify text-base text-stone-400 hover:text-white transition-colors" data-icon="mdi:linkedin"></span>
+            <span class="iconify text-base text-stone-400" data-icon="mdi:linkedin"></span>
           </a>
           <a href="https://www.instagram.com/lyndatampubolon_" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/15 transition-colors">
-            <span class="iconify text-base text-stone-400 hover:text-white transition-colors" data-icon="mdi:instagram"></span>
+            <span class="iconify text-base text-stone-400" data-icon="mdi:instagram"></span>
           </a>
           <a href="mailto:lyndabianca14@gmail.com" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/15 transition-colors">
-            <span class="iconify text-base text-stone-400 hover:text-white transition-colors" data-icon="lucide:mail"></span>
+            <span class="iconify text-base text-stone-400" data-icon="lucide:mail"></span>
           </a>
         </div>
 
@@ -1030,8 +995,8 @@
     </div>
   </footer>
 
-  <!-- ========== TOAST ========== -->
-  <div id="toast" class="toast glass rounded-2xl px-6 py-4 shadow-xl flex items-center gap-3">
+  <!-- ========== TOAST SUCCESS ========== -->
+  <div id="toastSuccess" class="toast glass rounded-2xl px-6 py-4 shadow-xl flex items-center gap-3">
     <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
       <span class="iconify text-green-600" data-icon="lucide:check"></span>
     </div>
@@ -1041,8 +1006,20 @@
     </div>
   </div>
 
+  <!-- ========== TOAST ERROR ========== -->
+  <div id="toastError" class="toast glass rounded-2xl px-6 py-4 shadow-xl flex items-center gap-3">
+    <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+      <span class="iconify text-red-600" data-icon="lucide:alert-circle"></span>
+    </div>
+    <div>
+      <span class="text-sm font-medium text-stone-800">Gagal mengirim pesan</span>
+      <div class="text-[10px] font-mono text-stone-400" id="toastErrorMsg">Terjadi kesalahan, coba lagi.</div>
+    </div>
+  </div>
+
   <!-- ========== SCRIPTS ========== -->
   <script>
+    // ===== Navbar scroll effect =====
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -1054,6 +1031,7 @@
       }
     });
 
+    // ===== Mobile menu =====
     const mobileToggle = document.getElementById('mobileToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const menuIcon = document.getElementById('menuIcon');
@@ -1071,6 +1049,7 @@
       });
     });
 
+    // ===== Scroll animations =====
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -1078,6 +1057,7 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
+    // ===== Active nav link =====
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
@@ -1091,6 +1071,7 @@
       });
     });
 
+    // ===== Smooth scroll =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1099,16 +1080,105 @@
       });
     });
 
-    const contactForm = document.getElementById('contactForm');
-    const toast = document.getElementById('toast');
-    const toastRef = document.getElementById('toastRef');
-
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      toastRef.textContent = Math.random().toString(36).substring(2, 8).toUpperCase();
+    // ===== Toast helper =====
+    function showToast(id, duration = 4000) {
+      const toast = document.getElementById(id);
       toast.classList.add('show');
-      contactForm.reset();
-      setTimeout(() => toast.classList.remove('show'), 3500);
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ===== Form handling with validation =====
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const toastRef = document.getElementById('toastRef');
+    const toastErrorMsg = document.getElementById('toastErrorMsg');
+
+    // Clear error on input
+    contactForm.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', () => {
+        input.classList.remove('input-error');
+        const errorEl = input.parentElement.querySelector('.error-text');
+        if (errorEl) errorEl.classList.remove('show');
+      });
+    });
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameInput = contactForm.querySelector('input[name="name"]');
+      const emailInput = contactForm.querySelector('input[name="email"]');
+      const perihalInput = contactForm.querySelector('input[name="perihal"]');
+      const messageInput = contactForm.querySelector('textarea[name="message"]');
+
+      // Reset semua error
+      contactForm.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+      contactForm.querySelectorAll('.error-text').forEach(el => el.classList.remove('show'));
+
+      let hasError = false;
+
+      // Validasi nama
+      if (!nameInput.value.trim()) {
+        nameInput.classList.add('input-error');
+        document.getElementById('nameError').classList.add('show');
+        hasError = true;
+      }
+
+      // Validasi email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        emailInput.classList.add('input-error');
+        document.getElementById('emailError').classList.add('show');
+        hasError = true;
+      }
+
+      // Validasi perihal
+      if (!perihalInput.value.trim()) {
+        perihalInput.classList.add('input-error');
+        document.getElementById('perihalError').classList.add('show');
+        hasError = true;
+      }
+
+      // Validasi pesan
+      if (!messageInput.value.trim() || messageInput.value.trim().length < 10) {
+        messageInput.classList.add('input-error');
+        document.getElementById('messageError').classList.add('show');
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Tampilkan loading
+      const originalBtnHTML = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="iconify spinner text-sm" data-icon="lucide:loader-2"></span> Mengirim pesan...';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      try {
+        const formData = new FormData(contactForm);
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          toastRef.textContent = Math.random().toString(36).substring(2, 8).toUpperCase();
+          showToast('toastSuccess');
+          contactForm.reset();
+        } else {
+          toastErrorMsg.textContent = result.message || 'Terjadi kesalahan, coba lagi.';
+          showToast('toastError');
+        }
+      } catch (error) {
+        toastErrorMsg.textContent = 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.';
+        showToast('toastError');
+      } finally {
+        submitBtn.innerHTML = originalBtnHTML;
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+      }
     });
   </script>
 </body>
